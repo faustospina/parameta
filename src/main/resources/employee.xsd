@@ -1,0 +1,51 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://spring.io/guides/gs-producing-web-service"
+           targetNamespace="http://spring.io/guides/gs-producing-web-service"
+           elementFormDefault="qualified">
+
+    <xs:element name="EmployeeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" type="tns:employee"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="EmployeeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" type="tns:employee"/>
+                <xs:element name="tiempo_vinculacion" type="xs:string"/>
+                <xs:element name="edad_actual" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="employee">
+        <xs:sequence>
+            <xs:element name="nombres" type="xs:string"/>
+            <xs:element name="apellidos" type="xs:string"/>
+            <xs:element name="tipo_documento" type="tns:tipo_documento"/>
+            <xs:element name="numero_documento" type="xs:string"/>
+            <xs:element name="fecha_nacimiento" type="xs:dateTime"/>
+            <xs:element name="fecha_vinculacion" type="xs:dateTime"/>
+            <xs:element name="cargo" type="tns:cargo"/>
+            <xs:element name="salario" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="cargo">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GERENTE"/>
+            <xs:enumeration value="AUXILIAR"/>
+            <xs:enumeration value="SECRETARIA"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="tipo_documento">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CC"/>
+            <xs:enumeration value="CE"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
