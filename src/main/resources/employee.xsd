@@ -21,16 +21,16 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="employee">
-        <xs:sequence>
-            <xs:element name="nombres" type="xs:string"/>
-            <xs:element name="apellidos" type="xs:string"/>
-            <xs:element name="tipo_documento" type="tns:tipo_documento"/>
-            <xs:element name="numero_documento" type="xs:string"/>
-            <xs:element name="fecha_nacimiento" type="xs:dateTime"/>
-            <xs:element name="fecha_vinculacion" type="xs:dateTime"/>
-            <xs:element name="cargo" type="tns:cargo"/>
-            <xs:element name="salario" type="xs:double"/>
+    <xs:complexType  name="employee">
+        <xs:sequence >
+            <xs:element name="nombres" type="xs:string" nillable="true"/>
+            <xs:element name="apellidos" type="xs:string" nillable="true"/>
+            <xs:element name="tipo_documento" type="tns:tipo_documento" nillable="true"/>
+            <xs:element name="numero_documento" type="xs:string" nillable="true"/>
+            <xs:element name="fecha_nacimiento" type="xs:dateTime" nillable="true"/>
+            <xs:element name="fecha_vinculacion" type="xs:dateTime" nillable="true"/>
+            <xs:element name="cargo" type="tns:cargo" nillable="true"/>
+            <xs:element name="salario" type="xs:double" nillable="true"/>
         </xs:sequence>
     </xs:complexType>
 
