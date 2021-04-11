@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="ee0373c7-551f-46bf-8000-22bce4c224ed" activeEnvironment="Default" name="employee" resourceRoot="" soapui-version="5.6.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="9f7ca661-c5a5-4d2b-8c20-0ed189fbdc7e" wsaVersion="NONE" name="EmployeePortSoap11" type="wsdl" bindingName="{http://spring.io/guides/gs-producing-web-service}EmployeePortSoap11" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/ws/employee.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/ws/employee.wsdl"><con:part><con:url>http://localhost:8080/ws/employee.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://spring.io/guides/gs-producing-web-service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://spring.io/guides/gs-producing-web-service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://spring.io/guides/gs-producing-web-service">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://spring.io/guides/gs-producing-web-service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="EmployeeRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="employee" type="tns:employee"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EmployeeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="employee" type="tns:employee"/>
+            <xs:element name="tiempo_vinculacion" type="xs:string"/>
+            <xs:element name="edad_actual" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="employee">
+        <xs:sequence>
+          <xs:element name="nombres" type="xs:string"/>
+          <xs:element name="apellidos" type="xs:string"/>
+          <xs:element name="tipo_documento" type="tns:tipo_documento"/>
+          <xs:element name="numero_documento" type="xs:string"/>
+          <xs:element name="fecha_nacimiento" type="xs:dateTime"/>
+          <xs:element name="fecha_vinculacion" type="xs:dateTime"/>
+          <xs:element name="cargo" type="tns:cargo"/>
+          <xs:element name="salario" type="xs:double"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="cargo">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="GERENTE"/>
+          <xs:enumeration value="AUXILIAR"/>
+          <xs:enumeration value="SECRETARIA"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="tipo_documento">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CC"/>
+          <xs:enumeration value="CE"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="EmployeeResponse">
+    <wsdl:part element="tns:EmployeeResponse" name="EmployeeResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EmployeeRequest">
+    <wsdl:part element="tns:EmployeeRequest" name="EmployeeRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="EmployeePort">
+    <wsdl:operation name="Employee">
+      <wsdl:input message="tns:EmployeeRequest" name="EmployeeRequest"></wsdl:input>
+      <wsdl:output message="tns:EmployeeResponse" name="EmployeeResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmployeePortSoap11" type="tns:EmployeePort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Employee">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="EmployeeRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="EmployeeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmployeePortService">
+    <wsdl:port binding="tns:EmployeePortSoap11" name="EmployeePortSoap11">
+      <soap:address location="http://localhost:8080/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/ws</con:endpoint></con:endpoints><con:operation id="729eca11-024b-4db5-84f9-c6d0a4f88a16" isOneWay="false" action="" name="Employee" bindingOperationName="Employee" type="Request-Response" outputName="EmployeeResponse" inputName="EmployeeRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6d554466-a6a8-43d1-b4ea-af18cf2cb953" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gs:EmployeeRequest>\r
+         <gs:employee>\r
+            <gs:nombres>andres</gs:nombres>\r
+            <gs:apellidos>ospina rincon</gs:apellidos>\r
+            <gs:tipo_documento>CC</gs:tipo_documento>\r
+            <gs:numero_documento>103212</gs:numero_documento>\r
+            <gs:fecha_nacimiento>2000-12-03</gs:fecha_nacimiento>\r
+            <gs:fecha_vinculacion>2017-03-01</gs:fecha_vinculacion>\r
+            <gs:cargo>GERENTE</gs:cargo>\r
+            <gs:salario>1050000</gs:salario>\r
+         </gs:employee>\r
+      </gs:EmployeeRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://spring.io/guides/gs-producing-web-service/EmployeePort/EmployeeRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
