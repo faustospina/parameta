@@ -3,7 +3,6 @@ package com.parameta.demo.service;
 import com.parameta.demo.common.NotificationCode;
 import com.parameta.demo.entity.EmployeeEntity;
 import com.parameta.demo.exception.EmployeeBusinessException;
-import com.parameta.demo.mapper.EmployeeMapper;
 import com.parameta.demo.repository.EmployeeRepository;
 import io.spring.guides.gs_producing_web_service.Employee;
 import io.spring.guides.gs_producing_web_service.EmployeeResponse;
@@ -16,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,15 +28,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
 
-    private EmployeeMapper employeeMapper;
-
-
     @Override
     public EmployeeResponse saveEmployee(Employee employee) throws ParseException, EmployeeBusinessException {
 
         EmployeeEntity employeeEntity = new EmployeeEntity();
         employeeEntity.setId(UUID.randomUUID());
         employeeEntity.setNombres(employee.getNombres());
+        employeeEntity.setApellidos(employee.getApellidos());
         employeeEntity.setTipoDocumento(employee.getTipoDocumento().value());
         employeeEntity.setNumeroDocumento(employee.getNumeroDocumento());
         try {

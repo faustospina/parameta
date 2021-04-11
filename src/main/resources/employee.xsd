@@ -46,6 +46,7 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="CC"/>
             <xs:enumeration value="CE"/>
+            <xs:enumeration value="TI"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
