@@ -4,28 +4,22 @@ import com.parameta.demo.common.NotificationCode;
 import com.parameta.demo.entity.EmployeeEntity;
 import com.parameta.demo.exception.EmployeeBusinessException;
 import com.parameta.demo.repository.EmployeeRepository;
+import com.parameta.demo.utilities.Utilities;
 import io.spring.guides.gs_producing_web_service.Employee;
 import io.spring.guides.gs_producing_web_service.EmployeeResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.Optional;
 import java.util.UUID;
 
 
 @Service
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
 
     @Override
@@ -37,46 +31,26 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeEntity.setApellidos(employee.getApellidos());
         employeeEntity.setTipoDocumento(employee.getTipoDocumento().value());
         employeeEntity.setNumeroDocumento(employee.getNumeroDocumento());
+        employeeEntity.setNumeroDocumento(employee.getNumeroDocumento());
+        employeeEntity.setCargo(employee.getCargo().value());
+        employeeEntity.setSalario(employee.getSalario());
         try {
-            employeeEntity.setFechaNacimiento(validateDate(employee.getFechaNacimiento()));
-            employeeEntity.setFechaVinculacion(validateDate(employee.getFechaVinculacion()));
+            employeeEntity.setFechaNacimiento(Utilities.validateDate(employee.getFechaNacimiento()));
+            employeeEntity.setFechaVinculacion(Utilities.validateDate(employee.getFechaVinculacion()));
         } catch (EmployeeBusinessException e) {
             throw new EmployeeBusinessException(e.getErrorCode());
         }
 
-        employeeEntity.setNumeroDocumento(employee.getNumeroDocumento());
-        employeeEntity.setCargo(employee.getCargo().value());
-        employeeEntity.setSalario(employee.getSalario());
+            Utilities.validateAge(employeeEntity.getFechaNacimiento());
+            employeeRepository.save(employeeEntity);
+            EmployeeResponse employeeResponse = new EmployeeResponse();
+            employeeResponse.setEmployee(employee);
+            employeeResponse.setEdadActual(Utilities.tiempo(employeeEntity.getFechaNacimiento()));
+            employeeResponse.setTiempoVinculacion(Utilities.tiempo(employeeEntity.getFechaVinculacion()));
+            return employeeResponse;
 
-        Optional.ofNullable(employeeRepository.save(employeeEntity)).orElseThrow(() -> new EmployeeBusinessException(NotificationCode.NULL_DATE));
-
-        EmployeeResponse employeeResponse = new EmployeeResponse();
-        employeeResponse.setEmployee(employee);
-        employeeResponse.setEdadActual(tiempo(employeeEntity.getFechaNacimiento()));
-        employeeResponse.setTiempoVinculacion(tiempo(employeeEntity.getFechaVinculacion()));
-
-        return employeeResponse;
 
     }
-
-    private Date validateDate(XMLGregorianCalendar dateIn) throws ParseException, EmployeeBusinessException {
-        String temp = Optional
-                .ofNullable(dateIn.toString())
-                .orElseThrow(() -> new EmployeeBusinessException(NotificationCode.NULL_DATE));
-        Date valid = new SimpleDateFormat("yyyy-MM-dd").parse(temp);
-
-        return valid;
-    }
-
-    private String tiempo(Date date) {
-        LocalDate ahora = LocalDate.now();
-        Period periodo = Period.between(date.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate(), ahora);
-        return periodo.getYears() + " años, " + periodo.getMonths() + " meses y " + periodo.getDays() + " días";
-
-    }
-
 
 
 }
