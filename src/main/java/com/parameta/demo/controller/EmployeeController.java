@@ -27,7 +27,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getStats(@RequestBody Employee employee) {
+    public ResponseEntity<?> saveEmployee(@RequestBody Employee employee) {
         try {
             return new ResponseEntity<>(employeeService.saveEmployee(employee), HttpStatus.OK);
         } catch (EmployeeBusinessException | ParseException g) {
